@@ -24,7 +24,7 @@ def champions_info():
 def champions_winrate():
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
-    sql = "SELECT champion_id, champion_name, Role.role_name, Lanes.lane_name, winrate, base_hp, base_ad, base_armor, base_magicresist, base_attackspeed, attackrange, movespeed FROM Champions JOIN Role ON Champions.role = Role.role_id JOIN Lanes ON Champions.strongest_lane = Lanes.lane_id ORDER BY winrate DESC"
+    sql = "SELECT champion_id, champion_name, Role.role_name, Lanes.lane_name, winrate FROM Champions JOIN Role ON Champions.role = Role.role_id JOIN Lanes ON Champions.strongest_lane = Lanes.lane_id ORDER BY winrate DESC"
     cursor.execute(sql)
     results = cursor.fetchall()
     print("\n")
@@ -132,20 +132,138 @@ def champions_movespeed():
     print("\n")
     db.close()
 
+def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "INSERT INTO Champions (champion_name, role, strongest_lane, winrate, base_hp, base_ad, base_armor, base_magicresist, base_attackspeed, attackrange, movespeed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    values = (new_champion_name, new_role, new_strongest_lane, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def delete_data(delete_champion_name):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "DELETE FROM Champions WHERE champion_name=?"
+    cursor.execute(sql, (delete_champion_name,))
+    db.commit()
+    db.close()
+
+def update_data_name(which_update_champion, update_champion_name):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET champion_name= ? WHERE champion_name=?"
+    values = (update_champion_name, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_role(which_update_champion, update_role):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET role= ? WHERE champion_name=?"
+    values = (update_role, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_lane(which_update_champion, update_lane):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET strongest_lane = ? WHERE champion_name = ?"
+    values = (update_lane, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_winrate(which_update_champion, update_winrate):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET winrate = ? WHERE champion_name = ?"
+    values = (update_winrate, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_hp(which_update_champion, update_hp):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET base_hp = ? WHERE champion_name = ?"
+    values = (update_hp, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_ad(which_update_champion, update_ad):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET base_ad = ? WHERE champion_name = ?"
+    values = (update_ad, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_armor(which_update_champion, update_armor):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET base_armor = ? WHERE champion_name = ?"
+    values = (update_armor, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_magicresist(which_update_champion, update_magicresist):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET base_magicresist = ? WHERE champion_name = ?"
+    values = (update_magicresist, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_attackspeed(which_update_champion, update_attackspeed):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET base_attackspeed = ? WHERE champion_name = ?"
+    values = (update_attackspeed, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_attackrange(which_update_champion, update_attackrange):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET attackrange = ? WHERE champion_name = ?"
+    values = (update_attackrange, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
+
+def update_data_movespeed(which_update_champion, update_movespeed):
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "UPDATE Champions SET movespeed = ? WHERE champion_name = ?"
+    values = (update_movespeed, which_update_champion)
+    cursor.execute(sql, values)
+    db.commit()
+    db.close()
 
 while True:
     user_input = input("Type 1 to display all the champions information\n"
-                    "Type 2 to display champion winrate highest to lowest\n"
-                    "Type 3 to display champion hp highest to lowest\n"
-                    "Type 4 to display champion ad highest to lowest\n"
-                    "Type 5 to display champion armor highest to lowest\n"
-                    "Type 6 to display champion magic resist highest to lowest\n"
-                    "Type 7 to display champion attack speed highest to lowest\n"
-                    "Type 8 to display champion range highest to lowest\n"
-                    "Type 9 to display champion movespeed highest to lowest\n"
-                    "Type nothing to exit\n"
-                    "\n")
-                    
+                       "Type 2 to display champion winrate highest to lowest\n"
+                       "Type 3 to display champion hp highest to lowest\n"
+                       "Type 4 to display champion ad highest to lowest\n"
+                       "Type 5 to display champion armor highest to lowest\n"
+                       "Type 6 to display champion magic resist highest to lowest\n"            
+                       "Type 7 to display champion attack speed highest to lowest\n"
+                       "Type 8 to display champion range highest to lowest\n"
+                       "Type 9 to display champion movespeed highest to lowest\n"
+                       "Type 0 to insert a new row to the database\n"
+                       "Type 11 to delete a row in the database\n"
+                       "Type 12 to update data in the database\n"
+                       "Type nothing to exit\n"
+                       "You: ")
+    
     if user_input == "1":
         champions_info()
     elif user_input == "2":
@@ -164,10 +282,62 @@ while True:
         champions_range()
     elif user_input == "9":
         champions_movespeed()
+    elif user_input == "0":
+        new_champion_name = input("Enter champion name: ")
+        new_role = input("Enter role: ")
+        new_lane = input("Enter lane: ")
+        new_winrate = input("Enter winrate: ")
+        new_hp = input("Enter base hp: ")
+        new_ad = input("Enter base ad: ")
+        new_armor = input("Enter base armor: ")
+        new_magicresist = input("Enter base magicresist: ")
+        new_attackspeed = input("Enter base attackspeed: ")
+        new_attackrange = input("Enter base attackrange: ")
+        new_movespeed = input("Enter base movespeed: ")
+        
+        insert_data(new_champion_name, new_role, new_lane, new_winrate, new_hp, new_ad, new_armor, new_magicresist, new_attackspeed, new_attackrange, new_movespeed)
+        print("New champion data inserted successfully.")
+    elif user_input == "11":
+        delete_champion_name = input("Enter champion name: ")
+        delete_data(delete_champion_name)
+        print("Champion data deleted successfully.")
+    elif user_input == "12":
+        which_update_champion = input("Enter the champion you would like to update: ")
+        column_name = input("Which column would you like to update\n"
+                            "name, role, lane, winrate, hp, ad, armor, magicresist, attackspeed, attackrange, movespeed\n"
+                            )
+        if column_name == "name":
+            update_champion_name = input("Enter new champion name: ")
+            update_data_name(which_update_champion, update_champion_name)
+        elif column_name == "role":
+            update_role = input("Enter new role: ")
+            update_data_role(which_update_champion, update_role)
+        elif column_name == "lane":
+            update_lane = input("Enter new lane: ")
+            update_data_lane(which_update_champion, update_lane)
+        elif column_name == "winrate":
+            update_winrate = input("Enter new winrate: ")
+            update_data_winrate(which_update_champion, update_winrate)
+        elif column_name == "hp":
+            update_hp = input("Enter new base hp: ")
+            update_data_hp(which_update_champion, update_hp)
+        elif column_name == "ad":
+            update_ad = input("Enter new base ad: ")
+            update_data_ad(which_update_champion, update_ad)
+        elif column_name == "armor":
+            update_armor = input("Enter new base armor: ")
+            update_data_armor(which_update_champion, update_armor)
+        elif column_name == "magicresist":
+            update_magicresist = input("Enter new base magic resist: ")
+            update_data_magicresist(which_update_champion, update_magicresist)
+        elif column_name == "attackspeed":
+            update_attackspeed = input("Enter new base attack speed: ")
+            update_data_attackspeed(which_update_champion, update_attackspeed)
+        elif column_name == "attackrange":
+            update_attackrange = input("Enter new base attack range: ")
+            
+
     elif user_input == "":
         break
     else:
-        print("\n")
-        print("That was not a valid input, Try again")
-        print("\n")
-
+        print("\nThat was not a valid input, Try again\n")
