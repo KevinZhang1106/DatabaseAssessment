@@ -138,15 +138,24 @@ def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, ne
     
     cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (new_role,))
     role_id = cursor.fetchone()
+    if role_id is None:
+        print(f"{new_role} is not a valid input")
+        db.close()
+        return
     role_id = role_id[0]
     
     cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (new_strongest_lane,))
     lane_id = cursor.fetchone()
+    if lane_id is None:
+        print(f"{new_strongest_lane} is not a valid input")
+        db.close()
+        return
     lane_id = lane_id[0]
     
     sql = "INSERT INTO Champions (champion_name, role, strongest_lane, winrate, base_hp, base_ad, base_armor, base_magicresist, base_attackspeed, attackrange, movespeed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     values = (new_champion_name, role_id, lane_id, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed)
     cursor.execute(sql, values)
+    print("New champion data inserted successfully.")
     
     db.commit()
     db.close()
@@ -154,14 +163,32 @@ def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, ne
 def delete_data(delete_champion_name):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (delete_champion_name,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{delete_champion_name} is not a champion in the database")
+        db.close()
+        return
+    
     sql = "DELETE FROM Champions WHERE champion_name=?"
     cursor.execute(sql, (delete_champion_name,))
+    print("Champion data deleted successfully.")
+
     db.commit()
     db.close()
 
 def update_data_name(which_update_champion, update_champion_name):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET champion_name= ? WHERE champion_name=?"
     values = (update_champion_name, which_update_champion)
     cursor.execute(sql, values)
@@ -172,8 +199,19 @@ def update_data_role(which_update_champion, update_role):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
 
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (update_role))
     role_id = cursor.fetchone()
+    if role_id is None:
+        print(f"{update_role} is not a valid input")
+        db.close()
+        return
     role_id = role_id[0]
 
     sql = "UPDATE Champions SET role= ? WHERE champion_name=?"
@@ -186,8 +224,19 @@ def update_data_lane(which_update_champion, update_lane):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
 
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (update_lane))
     lane_id = cursor.fetchone()
+    if lane_id is None:
+        print(f"{update_lane} is not a valid input")
+        db.close()
+        return
     lane_id = lane_id[0]
 
     sql = "UPDATE Champions SET strongest_lane = ? WHERE champion_name = ?"
@@ -199,6 +248,14 @@ def update_data_lane(which_update_champion, update_lane):
 def update_data_winrate(which_update_champion, update_winrate):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET winrate = ? WHERE champion_name = ?"
     values = (update_winrate, which_update_champion)
     cursor.execute(sql, values)
@@ -208,6 +265,14 @@ def update_data_winrate(which_update_champion, update_winrate):
 def update_data_hp(which_update_champion, update_hp):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET base_hp = ? WHERE champion_name = ?"
     values = (update_hp, which_update_champion)
     cursor.execute(sql, values)
@@ -217,6 +282,14 @@ def update_data_hp(which_update_champion, update_hp):
 def update_data_ad(which_update_champion, update_ad):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET base_ad = ? WHERE champion_name = ?"
     values = (update_ad, which_update_champion)
     cursor.execute(sql, values)
@@ -226,6 +299,14 @@ def update_data_ad(which_update_champion, update_ad):
 def update_data_armor(which_update_champion, update_armor):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET base_armor = ? WHERE champion_name = ?"
     values = (update_armor, which_update_champion)
     cursor.execute(sql, values)
@@ -235,6 +316,14 @@ def update_data_armor(which_update_champion, update_armor):
 def update_data_magicresist(which_update_champion, update_magicresist):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET base_magicresist = ? WHERE champion_name = ?"
     values = (update_magicresist, which_update_champion)
     cursor.execute(sql, values)
@@ -244,6 +333,14 @@ def update_data_magicresist(which_update_champion, update_magicresist):
 def update_data_attackspeed(which_update_champion, update_attackspeed):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET base_attackspeed = ? WHERE champion_name = ?"
     values = (update_attackspeed, which_update_champion)
     cursor.execute(sql, values)
@@ -253,6 +350,14 @@ def update_data_attackspeed(which_update_champion, update_attackspeed):
 def update_data_attackrange(which_update_champion, update_attackrange):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET attackrange = ? WHERE champion_name = ?"
     values = (update_attackrange, which_update_champion)
     cursor.execute(sql, values)
@@ -262,11 +367,32 @@ def update_data_attackrange(which_update_champion, update_attackrange):
 def update_data_movespeed(which_update_champion, update_movespeed):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT champion_name FROM Champions WHERE champion_name =?", (which_update_champion,))
+    is_champion = cursor.fetchone()
+    if is_champion is None:
+        print(f"{which_update_champion} is not a champion in the database\n Update failed.")
+        db.close()
+        return
+
     sql = "UPDATE Champions SET movespeed = ? WHERE champion_name = ?"
     values = (update_movespeed, which_update_champion)
     cursor.execute(sql, values)
     db.commit()
     db.close()
+
+def champions_name():
+    db = sqlite3.connect(DATABASE)
+    cursor = db.cursor()
+    sql = "SELECT champion_name FROM Champions"
+    cursor.execute(sql)
+    results = cursor.fetchall()
+    print("\n")
+    print("Champion names\n")
+    for champion in results:
+        print(champion[0])
+    db.close()
+
 
 while True:
     user_input = input("Type 1 to display all the champions information\n"
@@ -304,8 +430,14 @@ while True:
         champions_movespeed()
     elif user_input == "0":
         new_champion_name = input("Enter champion name: ")
-        new_role = input("Enter role: ")
-        new_lane = input("Enter lane: ")
+        new_role = input("role? (capitalisation is important)\n"
+                         "assassin, mage, tank, marksmen, support, fighter\n"
+                         "You: "
+                         )
+        new_lane = input("strongest lane? (capitalisation is important)\n"
+                         "mid, bottom, top, jungle\n"
+                         "You: "
+                         )
         new_winrate = input("Enter winrate: ")
         new_hp = input("Enter base hp: ")
         new_ad = input("Enter base ad: ")
@@ -316,15 +448,16 @@ while True:
         new_movespeed = input("Enter base movespeed: ")
         
         insert_data(new_champion_name, new_role, new_lane, new_winrate, new_hp, new_ad, new_armor, new_magicresist, new_attackspeed, new_attackrange, new_movespeed)
-        print("New champion data inserted successfully.")
     elif user_input == "11":
-        delete_champion_name = input("Enter champion name: ")
+        champions_name()
+        delete_champion_name = input("Enter champion you would like to delete: ")
         delete_data(delete_champion_name)
-        print("Champion data deleted successfully.")
     elif user_input == "12":
+        champions_name()
         which_update_champion = input("Enter the champion you would like to update: ")
         column_name = input("Which column would you like to update\n"
                             "name, role, lane, winrate, hp, ad, armor, magicresist, attackspeed, attackrange, movespeed\n"
+                            "You: "
                             )
         if column_name == "name":
             update_champion_name = input("Enter new champion name: ")
@@ -336,8 +469,8 @@ while True:
             update_lane = input("Enter new lane: ")
             update_data_lane(which_update_champion, update_lane)
         elif column_name == "winrate":
-            update_winrate = input("Enter new winrate: ")
-            update_data_winrate(which_update_champion, update_winrate)
+                update_winrate = input("Enter new winrate: ")
+                update_data_winrate(which_update_champion, update_winrate)
         elif column_name == "hp":
             update_hp = input("Enter new base hp: ")
             update_data_hp(which_update_champion, update_hp)
@@ -356,7 +489,6 @@ while True:
         elif column_name == "attackrange":
             update_attackrange = input("Enter new base attack range: ")
             
-
     elif user_input == "":
         break
     else:
