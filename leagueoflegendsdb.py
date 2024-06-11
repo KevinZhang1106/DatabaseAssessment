@@ -135,9 +135,19 @@ def champions_movespeed():
 def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+    
+    cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (new_role,))
+    role_id = cursor.fetchone()
+    role_id = role_id[0]
+    
+    cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (new_strongest_lane,))
+    lane_id = cursor.fetchone()
+    lane_id = lane_id[0]
+    
     sql = "INSERT INTO Champions (champion_name, role, strongest_lane, winrate, base_hp, base_ad, base_armor, base_magicresist, base_attackspeed, attackrange, movespeed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    values = (new_champion_name, new_role, new_strongest_lane, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed)
+    values = (new_champion_name, role_id, lane_id, new_winrate, new_base_hp, new_base_ad, new_base_armor, new_base_magicresist, new_base_attackspeed, new_attackrange, new_movespeed)
     cursor.execute(sql, values)
+    
     db.commit()
     db.close()
 
@@ -161,8 +171,13 @@ def update_data_name(which_update_champion, update_champion_name):
 def update_data_role(which_update_champion, update_role):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (update_role))
+    role_id = cursor.fetchone()
+    role_id = role_id[0]
+
     sql = "UPDATE Champions SET role= ? WHERE champion_name=?"
-    values = (update_role, which_update_champion)
+    values = (role_id, which_update_champion)
     cursor.execute(sql, values)
     db.commit()
     db.close()
@@ -170,8 +185,13 @@ def update_data_role(which_update_champion, update_role):
 def update_data_lane(which_update_champion, update_lane):
     db = sqlite3.connect(DATABASE)
     cursor = db.cursor()
+
+    cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (update_lane))
+    lane_id = cursor.fetchone()
+    lane_id = lane_id[0]
+
     sql = "UPDATE Champions SET strongest_lane = ? WHERE champion_name = ?"
-    values = (update_lane, which_update_champion)
+    values = (lane_id, which_update_champion)
     cursor.execute(sql, values)
     db.commit()
     db.close()
