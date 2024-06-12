@@ -139,7 +139,9 @@ def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, ne
     cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (new_role,))
     role_id = cursor.fetchone()
     if role_id is None:
-        print(f"{new_role} is not a valid input")
+        print("\n")
+        print(f"{new_role} is not a valid input\nInsert failed.")
+        print("\n")
         db.close()
         return
     role_id = role_id[0]
@@ -147,7 +149,9 @@ def insert_data(new_champion_name, new_role, new_strongest_lane, new_winrate, ne
     cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (new_strongest_lane,))
     lane_id = cursor.fetchone()
     if lane_id is None:
-        print(f"{new_strongest_lane} is not a valid input")
+        print("\n")
+        print(f"{new_strongest_lane} is not a valid input\nInsert failed.")
+        print("\n")
         db.close()
         return
     lane_id = lane_id[0]
@@ -195,7 +199,9 @@ def update_data_role(which_update_champion, update_role):
     cursor.execute("SELECT role_id FROM Role WHERE role_name = ?", (update_role,))
     role_id = cursor.fetchone()
     if role_id is None:
+        print("\n")
         print(f"{update_role} is not a valid input")
+        print("\n")
         db.close()
         return
     role_id = role_id[0]
@@ -216,7 +222,9 @@ def update_data_lane(which_update_champion, update_lane):
     cursor.execute("SELECT lane_id FROM Lanes WHERE lane_name = ?", (update_lane,))
     lane_id = cursor.fetchone()
     if lane_id is None:
+        print("\n")
         print(f"{update_lane} is not a valid input")
+        print("\n")
         db.close()
         return
     lane_id = lane_id[0]
