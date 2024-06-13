@@ -1,7 +1,9 @@
 # docstring - Kevin Zhang league of legends database application
 import sqlite3
 
+# variables
 DATABASE = "champions.db"
+admin_password = "password"
 
 # functions
 
@@ -417,205 +419,226 @@ while True:
     elif user_input == "9":
         champions_movespeed()
     elif user_input == "i":
-        # while loop that will keep running until user enters a unique champion name
-        while True:
-            new_champion_name = input("Enter champion name: ")
-            if is_champion_real(new_champion_name):
-                print("This champion already exists please enter a champion that is not already in the database")
-            else:
-                break
-        # assigns variables to the users input used in functions above to user input
-        new_role = input("role? (capitalisation is important)\n"
-                         "assassin, mage, tank, marksmen, support, fighter\n"
-                         "You: "
-                         )
-        new_lane = input("strongest lane? (capitalisation is important)\n"
-                         "mid, bottom, top, jungle\n"
-                         "You: "
-                         )
-        # these while loops keep asking user for user input until the user input is true to the functions
-        while True:
-            new_winrate = input("Enter winrate: ")
-            if is_decimal_number(new_winrate):
-                break
-            else:
-                print("That is not a valid input, Try again")
+        # checks if password is = to the admin_password, if it doesn't the user will be sent back to the menu
+        password = input("Password: ")
+        if password == admin_password:
+            print("Access granted.")
+            # while loop that will keep running until user enters a unique champion name
+            while True:
+                new_champion_name = input("Enter champion name: ")
+                if is_champion_real(new_champion_name):
+                    print("This champion already exists please enter a champion that is not already in the database")
+                else:
+                    break
+            # assigns variables to the users input used in functions above to user input
+            new_role = input("role? (capitalisation is important)\n"
+                            "assassin, mage, tank, marksmen, support, fighter\n"
+                            "You: "
+                            )
+            new_lane = input("strongest lane? (capitalisation is important)\n"
+                            "mid, bottom, top, jungle\n"
+                            "You: "
+                            )
+            # these while loops keep asking user for user input until the user input is true to the functions
+            while True:
+                new_winrate = input("Enter winrate: ")
+                if is_decimal_number(new_winrate):
+                    break
+                else:
+                    print("That is not a valid input, Try again")
 
-        while True:
-            new_hp = input("Enter base hp: ")
-            if new_hp.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_hp = input("Enter base hp: ")
+                if new_hp.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_ad = input("Enter base ad: ")
-            if new_ad.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_ad = input("Enter base ad: ")
+                if new_ad.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_armor = input("Enter base armor: ")
-            if new_armor.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_armor = input("Enter base armor: ")
+                if new_armor.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_magicresist = input("Enter base magic resist: ")
-            if new_magicresist.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_magicresist = input("Enter base magic resist: ")
+                if new_magicresist.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_attackspeed = input("Enter base attack speed: ")
-            if is_decimal_number(new_attackspeed):
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_attackspeed = input("Enter base attack speed: ")
+                if is_decimal_number(new_attackspeed):
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_attackrange = input("Enter base attack range: ")
-            if new_attackrange.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
+            while True:
+                new_attackrange = input("Enter base attack range: ")
+                if new_attackrange.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        while True:
-            new_movespeed = input("Enter base movespeed: ")
-            if new_movespeed.isdigit():
-                break
-            else:
-                print("That is not a valid input, try again.")
-        
-        # after everything checks out, then it will run the insert data function        
-        insert_data(new_champion_name, new_role, new_lane, new_winrate, new_hp, new_ad, new_armor, new_magicresist, new_attackspeed, new_attackrange, new_movespeed)
-    elif user_input == "d":
-        # runs delete function
-        # asks user what champion they want to delete
-        # checks if champion exists in database and if it doesn't then the user will be sent back to the menu
-        champions_name()
-        delete_champion_name = input("Enter champion you would like to delete (enter nothing to go back)\n"
-                                     "You: "
-                                     )
+            while True:
+                new_movespeed = input("Enter base movespeed: ")
+                if new_movespeed.isdigit():
+                    break
+                else:
+                    print("That is not a valid input, try again.")
 
-        if delete_champion_name == "":
-            print("\n")
-
-        elif is_champion_real(delete_champion_name):
-            delete_data(delete_champion_name)
+            # after everything checks out, then it will run the insert data function
+            insert_data(new_champion_name, new_role, new_lane, new_winrate, new_hp, new_ad, new_armor, new_magicresist, new_attackspeed, new_attackrange, new_movespeed)
         else:
-            print("\n")
-            print(f"{delete_champion_name} is not a champion in the database\nDeletion failed.\n")
-            print("\n")
+            print("Password incorrect\nAccess denied.")
+        
+                
+        
+    elif user_input == "d":
+        # checks if password is = to the admin_password, if it doesn't the user will be sent back to the menu
+        password = input("Password: ")
+        if password == admin_password:
+            print("Access granted.")
+            # runs delete function
+            # asks user what champion they want to delete
+            # checks if champion exists in database and if it doesn't then the user will be sent back to the menu
+            champions_name()
+            delete_champion_name = input("Enter champion you would like to delete (enter nothing to go back)\n"
+                                        "You: "
+                                        )
+
+            if delete_champion_name == "":
+                print("\n")
+
+            elif is_champion_real(delete_champion_name):
+                delete_data(delete_champion_name)
+            else:
+                print("\n")
+                print(f"{delete_champion_name} is not a champion in the database\nDeletion failed.\n")
+                print("\n")
+        else: 
+            print("Password incorrect\nAccess denied.")
         
 
     elif user_input == "u":
-        # runs update function
-        # asks user which champions data they want to update and assigns a variable to that to be used in the update function
-        # checks if champion exists in database and if it doesn't then the user will be sent back to the menu
-        champions_name()
-        which_update_champion = input("Enter the champion you would like to update (enter nothing to go back)\n"
-                                      "You: "
+        # checks if password is = to the admin_password, if it doesn't the user will be sent back to the menu
+        password = input("Password: ")
+        if password == admin_password:
+            print("Access granted.")
+            # runs update function
+            # asks user which champions data they want to update and assigns a variable to that to be used in the update function
+            # checks if champion exists in database and if it doesn't then the user will be sent back to the menu
+            champions_name()
+            which_update_champion = input("Enter the champion you would like to update (enter nothing to go back)\n"
+                                        "You: "
+                                            )
+            is_champion_real(which_update_champion)
+            if which_update_champion == "":
+                print("\n")
+            # when champion is in the database and user doesn't want to go back then it will ask the user which column that want to update
+            elif is_champion_real(which_update_champion):
+                column_name = input("Which column would you like to update\n"
+                                "name, role, lane, winrate, hp, ad, armor, magicresist, attackspeed, attackrange, movespeed\n"
+                                "You: "
+                                )
+                # asks the user for the new value and assigns a variable based on the column used in update function
+                if column_name == "name":
+                    update_champion_name = input("Enter new champion name: ")
+                    update_data_name(which_update_champion, update_champion_name)
+                elif column_name == "role":
+                    update_role = input("Enter new role\n"
+                                        "assassin, mage, tank, marksmen, support, fighter\n"
+                                        "You: "
                                         )
-        is_champion_real(which_update_champion)
-        if which_update_champion == "":
-            print("\n")
-        # when champion is in the database and user doesn't want to go back then it will ask the user which column that want to update
-        elif is_champion_real(which_update_champion):
-            column_name = input("Which column would you like to update\n"
-                            "name, role, lane, winrate, hp, ad, armor, magicresist, attackspeed, attackrange, movespeed\n"
-                            "You: "
-                            )
-            # asks the user for the new value and assigns a variable based on the column used in update function
-            if column_name == "name":
-                update_champion_name = input("Enter new champion name: ")
-                update_data_name(which_update_champion, update_champion_name)
-            elif column_name == "role":
-                update_role = input("Enter new role\n"
-                                    "assassin, mage, tank, marksmen, support, fighter\n"
-                                    "You: "
-                                    )
-                update_data_role(which_update_champion, update_role)
-            elif column_name == "lane":
-                update_lane = input("Enter new lane\n"
-                                    "mid, bottom, top, jungle\n"
-                                    "You: "
-                                    )
-                update_data_lane(which_update_champion, update_lane)
-            # the while loops will keep asking the user for input until the user enters a valid input
-            elif column_name == "winrate":
-                while True:
-                    update_winrate = input("Enter new winrate: ")
-                    if is_decimal_number(update_winrate):
-                        update_data_winrate(which_update_champion, update_winrate)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "hp":
-                while True:
-                    update_hp = input("Enter new base hp: ")
-                    if update_hp.isdigit():
-                        update_data_hp(which_update_champion, update_hp)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "ad":
-                while True:
-                    update_ad = input("Enter new base ad: ")
-                    if update_ad.isdigit():
-                        update_data_ad(which_update_champion, update_ad)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "armor":
-                while True:
-                    update_armor = input("Enter new base armor: ")
-                    if update_armor.isdigit():
-                        update_data_armor(which_update_champion, update_armor)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "magicresist":
-                while True:
-                    update_magicresist = input("Enter new base magic resist: ")
-                    if update_magicresist.isdigit():
-                        update_data_magicresist(which_update_champion, update_magicresist)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "attackspeed":
-                while True:
-                    update_attackspeed = input("Enter new base attack speed: ")
-                    if is_decimal_number(update_attackspeed):
-                        update_data_attackspeed(which_update_champion, update_attackspeed)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "attackrange":
-                while True:
-                    update_attackrange = input("Enter new base attack range: ")
-                    if update_attackrange.isdigit():
-                        update_data_attackrange(which_update_champion, update_attackrange)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "movespeed":
-                while True:
-                    update_movespeed = input("Enter new base movespeed: ")
-                    if update_movespeed.isdigit():
-                        update_data_movespeed(which_update_champion, update_movespeed)
-                        break
-                    else:
-                        print("That is not a valid input, Try again")
-            elif column_name == "":
-                pass
+                    update_data_role(which_update_champion, update_role)
+                elif column_name == "lane":
+                    update_lane = input("Enter new lane\n"
+                                        "mid, bottom, top, jungle\n"
+                                        "You: "
+                                        )
+                    update_data_lane(which_update_champion, update_lane)
+                # the while loops will keep asking the user for input until the user enters a valid input
+                elif column_name == "winrate":
+                    while True:
+                        update_winrate = input("Enter new winrate: ")
+                        if is_decimal_number(update_winrate):
+                            update_data_winrate(which_update_champion, update_winrate)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "hp":
+                    while True:
+                        update_hp = input("Enter new base hp: ")
+                        if update_hp.isdigit():
+                            update_data_hp(which_update_champion, update_hp)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "ad":
+                    while True:
+                        update_ad = input("Enter new base ad: ")
+                        if update_ad.isdigit():
+                            update_data_ad(which_update_champion, update_ad)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "armor":
+                    while True:
+                        update_armor = input("Enter new base armor: ")
+                        if update_armor.isdigit():
+                            update_data_armor(which_update_champion, update_armor)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "magicresist":
+                    while True:
+                        update_magicresist = input("Enter new base magic resist: ")
+                        if update_magicresist.isdigit():
+                            update_data_magicresist(which_update_champion, update_magicresist)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "attackspeed":
+                    while True:
+                        update_attackspeed = input("Enter new base attack speed: ")
+                        if is_decimal_number(update_attackspeed):
+                            update_data_attackspeed(which_update_champion, update_attackspeed)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "attackrange":
+                    while True:
+                        update_attackrange = input("Enter new base attack range: ")
+                        if update_attackrange.isdigit():
+                            update_data_attackrange(which_update_champion, update_attackrange)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "movespeed":
+                    while True:
+                        update_movespeed = input("Enter new base movespeed: ")
+                        if update_movespeed.isdigit():
+                            update_data_movespeed(which_update_champion, update_movespeed)
+                            break
+                        else:
+                            print("That is not a valid input, Try again")
+                elif column_name == "":
+                    pass
+                else:
+                    print("\nThat was not a valid input\nUpdate failed.\n")
             else:
-                print("\nThat was not a valid input\nUpdate failed.\n")
+                print(f"{which_update_champion} is not a champion in the database\nTry again.")
         else:
-            print(f"{which_update_champion} is not a champion in the database\nTry again.")
+            print("Password incorrect\nAccess denied.")
             
     elif user_input == "":
         break
