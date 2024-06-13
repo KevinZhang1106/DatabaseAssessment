@@ -499,7 +499,9 @@ while True:
             # after everything checks out, then it will run the insert data function
             insert_data(new_champion_name, new_role, new_lane, new_winrate, new_hp, new_ad, new_armor, new_magicresist, new_attackspeed, new_attackrange, new_movespeed)
         else:
+            print("\n")
             print("Password incorrect\nAccess denied.")
+            print("\n")
         
                 
         
@@ -526,7 +528,9 @@ while True:
                 print(f"{delete_champion_name} is not a champion in the database\nDeletion failed.\n")
                 print("\n")
         else: 
+            print("\n")
             print("Password incorrect\nAccess denied.")
+            print("\n")
         
 
     elif user_input == "u":
@@ -640,7 +644,9 @@ while True:
                 print(f"{which_update_champion} is not a champion in the database\nUpdate failed.")
                 print("\n")
         else:
+            print("\n")
             print("Password incorrect\nAccess denied.")
+            print("\n")
             
     elif user_input == "":
         break
