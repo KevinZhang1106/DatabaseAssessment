@@ -636,7 +636,9 @@ while True:
                 else:
                     print("\nThat was not a valid input\nUpdate failed.\n")
             else:
-                print(f"{which_update_champion} is not a champion in the database\nTry again.")
+                print("\n")
+                print(f"{which_update_champion} is not a champion in the database\nUpdate failed.")
+                print("\n")
         else:
             print("Password incorrect\nAccess denied.")
             
